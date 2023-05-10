@@ -1,10 +1,10 @@
-package com.example.capstoneredouan.ui.view.screen
+package com.example.capstoneredouan.ui.view.route
 
 sealed class Screen(
     val route: String
 ) {
     object HomeScreen: Screen("home_screen")
-    object PrayerScreen: Screen("prayer_screen")
+    object PrayerTimesScreen: Screen("prayer_times_screen")
     object MapScreen: Screen("map_screen")
     object CompassScreen: Screen("compass_screen")
 }
