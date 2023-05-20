@@ -90,7 +90,7 @@ private fun NavHostScreen(
 
     NavHost(
         navController = navController,
-        startDestination = Screen.HomeScreen.route,
+        startDestination = Screen.PrayerTimesScreen.route,
     ) {
         composable(Screen.HomeScreen.route) {
             Home()
