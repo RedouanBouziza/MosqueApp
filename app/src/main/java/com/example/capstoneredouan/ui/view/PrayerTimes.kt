@@ -10,9 +10,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
+import com.example.capstoneredouan.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -68,6 +70,7 @@ fun PrayerTimes() {
     // Display all prayer times in a column
     Column {
         Text(text = "Fajr: $fajrTime")
+        Text(text = stringResource(id = R.string.fajr, fajrTime))
 //        Text(text = "Sunrise: $sunriseTime")
         Text(text = "Dhuhr: $dhuhrTime")
         Text(text = "Asr: $asrTime")
