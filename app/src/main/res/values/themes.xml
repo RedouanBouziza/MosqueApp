@@ -2,6 +2,7 @@
 <resources>
 
     <style name="Theme.CapstoneRedouan" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+        <item name="android:statusBarColor">@color/mosque_green</item>
+        <item name="android:navigationBarColor">@color/mosque_green</item>
     </style>
 </resources>
