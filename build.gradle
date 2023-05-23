@@ -19,4 +19,7 @@ plugins {
 
     // Apply the Google Services plugin (if it's not already)
     id 'com.google.gms.google-services' version '4.3.10' apply false
+
+    // Apply the Kotlin JVM plugin (if it's not already)
+    id 'com.google.dagger.hilt.android' version '2.44' apply false
 }

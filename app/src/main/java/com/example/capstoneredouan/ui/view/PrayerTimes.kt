@@ -1,7 +1,12 @@
 package com.example.capstoneredouan.ui.view
 
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,8 +14,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -32,9 +44,59 @@ fun PrayerTimes() {
 
     val context = LocalContext.current
 
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(R.color.mosque_green_background))
+    ) {
+        // Display all prayer times in a column
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxSize()
+                .clip(RoundedCornerShape(10.dp))
+                .background(Color.White),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+//                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = stringResource(id = R.string.fajr, fajrTime)
+            )
+            Text(
+//                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = stringResource(id = R.string.dhuhr, dhuhrTime)
+            )
+            Text(
+//                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = stringResource(id = R.string.asr, asrTime)
+            )
+            Text(
+//                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = stringResource(id = R.string.maghrib, maghribTime)
+            )
+            Text(
+//                modifier = Modifier.align(Alignment.CenterHorizontally),
+                text = stringResource(id = R.string.isha, ishaTime)
+            )
+
+
+//        Text(text = "Sunrise: $sunriseTime")
+//        Text(text = "Dhuhr: $dhuhrTime")
+//        Text(text = "Asr: $asrTime")
+//        Text(text = "Sunset: $sunsetTime")
+//        Text(text = "Maghrib: $maghribTime")
+//        Text(text = "Isha: $ishaTime")
+//        Text(text = "Imsak: $imsakTime")
+//        Text(text = "Midnight: $midnightTime")
+        }
+    }
+
+
     LaunchedEffect(Unit) {
         // Make the network request to retrieve prayer times
-        val url = "https://api.aladhan.com/v1/timingsByCity?city=Amsterdam&country=Netherlands&method=8"
+        val url =
+            "https://api.aladhan.com/v1/timingsByCity?city=Amsterdam&country=Netherlands&method=8"
         withContext(Dispatchers.IO) {
             try {
                 val requestQueue = Volley.newRequestQueue(context)
@@ -65,24 +127,5 @@ fun PrayerTimes() {
                 Log.e("LoadDataException", "Exception: ${e.message}")
             }
         }
-    }
-
-    // Display all prayer times in a column
-    Column {
-        Text(text = stringResource(id = R.string.fajr, fajrTime))
-        Text(text = stringResource(id = R.string.dhuhr, dhuhrTime))
-        Text(text = stringResource(id = R.string.asr, asrTime))
-        Text(text = stringResource(id = R.string.maghrib, maghribTime))
-        Text(text = stringResource(id = R.string.isha, ishaTime))
-
-
-//        Text(text = "Sunrise: $sunriseTime")
-//        Text(text = "Dhuhr: $dhuhrTime")
-//        Text(text = "Asr: $asrTime")
-//        Text(text = "Sunset: $sunsetTime")
-//        Text(text = "Maghrib: $maghribTime")
-//        Text(text = "Isha: $ishaTime")
-//        Text(text = "Imsak: $imsakTime")
-//        Text(text = "Midnight: $midnightTime")
     }
 }
