@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">Capstone Redouan</string>
 
+    <string name="prayer_times">Prayer Times</string>
     <string name="fajr">Fajr: %s</string>
+    <string name="dhuhr">Dhuhr: %s</string>
+    <string name="asr">Asr: %s</string>
+    <string name="maghrib">Maghrib: %s</string>
+    <string name="isha">Isha: %s</string>
+
 </resources>

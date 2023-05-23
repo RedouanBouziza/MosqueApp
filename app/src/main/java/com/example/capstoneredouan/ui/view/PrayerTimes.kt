@@ -69,14 +69,19 @@ fun PrayerTimes() {
 
     // Display all prayer times in a column
     Column {
-        Text(text = "Fajr: $fajrTime")
         Text(text = stringResource(id = R.string.fajr, fajrTime))
+        Text(text = stringResource(id = R.string.dhuhr, dhuhrTime))
+        Text(text = stringResource(id = R.string.asr, asrTime))
+        Text(text = stringResource(id = R.string.maghrib, maghribTime))
+        Text(text = stringResource(id = R.string.isha, ishaTime))
+
+
 //        Text(text = "Sunrise: $sunriseTime")
-        Text(text = "Dhuhr: $dhuhrTime")
-        Text(text = "Asr: $asrTime")
+//        Text(text = "Dhuhr: $dhuhrTime")
+//        Text(text = "Asr: $asrTime")
 //        Text(text = "Sunset: $sunsetTime")
-        Text(text = "Maghrib: $maghribTime")
-        Text(text = "Isha: $ishaTime")
+//        Text(text = "Maghrib: $maghribTime")
+//        Text(text = "Isha: $ishaTime")
 //        Text(text = "Imsak: $imsakTime")
 //        Text(text = "Midnight: $midnightTime")
     }
