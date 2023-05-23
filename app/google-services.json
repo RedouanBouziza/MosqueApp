@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "398658268072",
+    "project_id": "capstone-redouan",
+    "storage_bucket": "capstone-redouan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:398658268072:android:ac2f5fdb88b0c1dd9f4b9d",
+        "android_client_info": {
+          "package_name": "com.example.capstoneredouan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "398658268072-alr4i5j6h1li3snbd0mv6dct7v564dft.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIVmcJGu9MW5Henj3jVFms4RR_OhiVXTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "398658268072-alr4i5j6h1li3snbd0mv6dct7v564dft.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
