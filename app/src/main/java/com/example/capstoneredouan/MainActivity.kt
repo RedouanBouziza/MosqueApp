@@ -73,7 +73,7 @@ fun LoadData() {
 
 
                     Log.i("LoadData", "Response: %s".format(data))
-                    // ...
+
                 },
                 { error ->
                     // Handle error
