@@ -46,41 +46,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     NavHostScreen(navController)
-                    LoadData()
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun LoadData() {
-    var url by remember { mutableStateOf("") }
-    val context = LocalContext.current
-    url = "https://api.aladhan.com/v1/timingsByCity?city=Amsterdam&country=Netherlands&method=8"
-    // Use the url variable to make a network request
-    LaunchedEffect(url) {
-        withContext(Dispatchers.IO) {
-            val requestQueue = Volley.newRequestQueue(context)
-            val jsonObjectRequest = JsonObjectRequest(
-                Request.Method.GET, url, null,
-                { response ->
-                    // Handle successful response data
-                    val data = response.getJSONObject("data")
-                    val timings = data.getJSONObject("timings")
-                    val fajr = timings.getString("Fajr")
-
-
-
-                    Log.i("LoadData", "Response: %s".format(data))
-
-                },
-                { error ->
-                    // Handle error
-                    Log.e("LoadDataError", "Error: ${error.message}")
-                }
-            )
-            requestQueue.add(jsonObjectRequest)
         }
     }
 }
