@@ -5,8 +5,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
@@ -32,6 +36,7 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun PrayerTimes() {
+    var dayTime by remember { mutableStateOf("") }
     var fajrTime by remember { mutableStateOf("") }
     var sunriseTime by remember { mutableStateOf("") }
     var dhuhrTime by remember { mutableStateOf("") }
@@ -53,31 +58,42 @@ fun PrayerTimes() {
         Column(
             modifier = Modifier
                 .padding(16.dp)
-                .fillMaxSize()
+                .height(300.dp)
+                .fillMaxWidth()
                 .clip(RoundedCornerShape(10.dp))
                 .background(Color.White),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-//                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(id = R.string.fajr, fajrTime)
+                text = dayTime,
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
             )
             Text(
-//                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(id = R.string.dhuhr, dhuhrTime)
+                text = stringResource(id = R.string.fajr, fajrTime),
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
             )
             Text(
-//                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(id = R.string.asr, asrTime)
+                text = stringResource(id = R.string.dhuhr, dhuhrTime),
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
             )
             Text(
-//                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(id = R.string.maghrib, maghribTime)
+                text = stringResource(id = R.string.asr, asrTime),
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
             )
             Text(
-//                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(id = R.string.isha, ishaTime)
+                text = stringResource(id = R.string.maghrib, maghribTime),
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
+            )
+            Text(
+                text = stringResource(id = R.string.isha, ishaTime),
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
             )
 
 
@@ -106,6 +122,12 @@ fun PrayerTimes() {
                         // Handle successful response data
                         val data = response.getJSONObject("data")
                         val timings = data.getJSONObject("timings")
+
+                        // Extract the readable date text
+                        val date = data.getJSONObject("date")
+                        val readableDate = date.getString("readable")
+                        dayTime = readableDate
+
                         fajrTime = timings.getString("Fajr")
                         sunriseTime = timings.getString("Sunrise")
                         dhuhrTime = timings.getString("Dhuhr")
