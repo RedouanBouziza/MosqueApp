@@ -1,13 +1,22 @@
 buildscript {
     ext {
         compose_ui_version = '1.2.0'
+        gradle_version = '7.3.1'
+        kotlin_version = '1.7.20'
+        google_services_version = '4.3.14'
+        compose_bom_version = '2022.12.00'
+        hilt_version = '2.44.2'
+        hilt_navigation_compose_version = '1.0.0'
+        firebase_bom_version = '31.1.1'
+        accompanist_version = '0.28.0'
     }
     repositories {
         google()  // Google's Maven repository
         mavenCentral()  // Maven Central repository
     }
     dependencies {
-        classpath 'com.google.gms:google-services:4.3.15'
+        classpath "com.google.gms:google-services:$google_services_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
     }
 }
 
