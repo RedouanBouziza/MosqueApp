@@ -1,5 +1,6 @@
 package com.example.capstoneredouan.ui.view
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,8 +10,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -23,38 +30,71 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.android.volley.Request
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.example.capstoneredouan.R
+import com.example.capstoneredouan.data.api.PrayerTimesApi
+import com.example.capstoneredouan.data.utils.Resource
+import com.example.capstoneredouan.ui.view.route.Screen
+import com.example.capstoneredouan.ui.viewmodel.LoginViewModel
+import com.example.capstoneredouan.ui.viewmodel.PrayerTimesViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-fun PrayerTimes() {
-    var dayTime by remember { mutableStateOf("") }
-    var fajrTime by remember { mutableStateOf("") }
-    var sunriseTime by remember { mutableStateOf("") }
-    var dhuhrTime by remember { mutableStateOf("") }
-    var asrTime by remember { mutableStateOf("") }
-    var sunsetTime by remember { mutableStateOf("") }
-    var maghribTime by remember { mutableStateOf("") }
-    var ishaTime by remember { mutableStateOf("") }
-    var imsakTime by remember { mutableStateOf("") }
-    var midnightTime by remember { mutableStateOf("") }
+fun PrayerTimes(navController: NavHostController, viewModel: PrayerTimesViewModel, loginViewModel: LoginViewModel) {
 
     val context = LocalContext.current
+
+    var city by remember { mutableStateOf("") }
+    var country by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(R.color.mosque_green_background))
     ) {
-        // Display all prayer times in a column
+
+        TextField(
+            value = city,
+            onValueChange = { city = it },
+            label = { Text("City") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp)
+        )
+
+        TextField(
+            value = country,
+            onValueChange = { country = it },
+            label = { Text("Country") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+        )
+
+        Button(
+            onClick = {
+                if (city.isNotEmpty() && country.isNotEmpty()) {
+                    viewModel.fetchPrayerTimes(context, city, country)
+                }
+            },
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(16.dp)
+        ) {
+            Text(text = "Refresh")
+        }
+
+        // Display prayer times from the ViewModel
         Column(
             modifier = Modifier
                 .padding(16.dp)
@@ -65,88 +105,39 @@ fun PrayerTimes() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = dayTime,
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = stringResource(id = R.string.fajr, fajrTime),
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = stringResource(id = R.string.dhuhr, dhuhrTime),
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = stringResource(id = R.string.asr, asrTime),
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = stringResource(id = R.string.maghrib, maghribTime),
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Bold,
-            )
-            Text(
-                text = stringResource(id = R.string.isha, ishaTime),
-                style = MaterialTheme.typography.h5,
-                fontWeight = FontWeight.Bold,
-            )
+            val prayerTimes = viewModel.prayerTimesState.value
 
-
-//        Text(text = "Sunrise: $sunriseTime")
-//        Text(text = "Dhuhr: $dhuhrTime")
-//        Text(text = "Asr: $asrTime")
-//        Text(text = "Sunset: $sunsetTime")
-//        Text(text = "Maghrib: $maghribTime")
-//        Text(text = "Isha: $ishaTime")
-//        Text(text = "Imsak: $imsakTime")
-//        Text(text = "Midnight: $midnightTime")
-        }
-    }
-
-
-    LaunchedEffect(Unit) {
-        // Make the network request to retrieve prayer times
-        val url =
-            "https://api.aladhan.com/v1/timingsByCity?city=Amsterdam&country=Netherlands&method=8"
-        withContext(Dispatchers.IO) {
-            try {
-                val requestQueue = Volley.newRequestQueue(context)
-                val jsonObjectRequest = JsonObjectRequest(
-                    Request.Method.GET, url, null,
-                    { response ->
-                        // Handle successful response data
-                        val data = response.getJSONObject("data")
-                        val timings = data.getJSONObject("timings")
-
-                        // Extract the readable date text
-                        val date = data.getJSONObject("date")
-                        val readableDate = date.getString("readable")
-                        dayTime = readableDate
-
-                        fajrTime = timings.getString("Fajr")
-                        sunriseTime = timings.getString("Sunrise")
-                        dhuhrTime = timings.getString("Dhuhr")
-                        asrTime = timings.getString("Asr")
-                        sunsetTime = timings.getString("Sunset")
-                        maghribTime = timings.getString("Maghrib")
-                        ishaTime = timings.getString("Isha")
-                        imsakTime = timings.getString("Imsak")
-                        midnightTime = timings.getString("Midnight")
-                    },
-                    { error ->
-                        // Handle error
-                        Log.e("LoadDataError", "Error: ${error.message}")
-                    }
+            prayerTimes?.let {
+                Text(
+                    text = it.dayTime,
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
                 )
-                requestQueue.add(jsonObjectRequest)
-            } catch (e: Exception) {
-                // Handle exception
-                Log.e("LoadDataException", "Exception: ${e.message}")
+                Text(
+                    text = stringResource(id = R.string.fajr, it.fajrTime),
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = stringResource(id = R.string.dhuhr, it.dhuhrTime),
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = stringResource(id = R.string.asr, it.asrTime),
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = stringResource(id = R.string.maghrib, it.maghribTime),
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                )
+                Text(
+                    text = stringResource(id = R.string.isha, it.ishaTime),
+                    style = MaterialTheme.typography.h5,
+                    fontWeight = FontWeight.Bold,
+                )
             }
         }
     }
