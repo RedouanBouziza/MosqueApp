@@ -7,4 +7,6 @@ sealed class Screen(
     object PrayerTimesScreen: Screen("prayer_times_screen")
     object MapScreen: Screen("map_screen")
     object CompassScreen: Screen("compass_screen")
+    object Login: Screen("login")
+    object Registration: Screen("registration")
 }
