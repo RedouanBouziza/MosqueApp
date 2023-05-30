@@ -1,5 +1,6 @@
 package com.example.capstoneredouan.ui.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.background
@@ -49,13 +50,16 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun PrayerTimes(navController: NavHostController, viewModel: PrayerTimesViewModel, loginViewModel: LoginViewModel) {
 
     val context = LocalContext.current
 
-    var city by remember { mutableStateOf("") }
-    var country by remember { mutableStateOf("") }
+    var city by remember { mutableStateOf("Amsterdam") }
+    var country by remember { mutableStateOf("Netherlands") }
+
+    viewModel.fetchDaytime(context, city, country)
 
     Column(
         modifier = Modifier
@@ -106,13 +110,15 @@ fun PrayerTimes(navController: NavHostController, viewModel: PrayerTimesViewMode
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val prayerTimes = viewModel.prayerTimesState.value
+            val dayTime = viewModel.dayTimeState.value
+
+            Text(
+                text = viewModel.dayTimeState.value,
+                style = MaterialTheme.typography.h5,
+                fontWeight = FontWeight.Bold,
+            )
 
             prayerTimes?.let {
-                Text(
-                    text = it.dayTime,
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold,
-                )
                 Text(
                     text = stringResource(id = R.string.fajr, it.fajrTime),
                     style = MaterialTheme.typography.h5,
