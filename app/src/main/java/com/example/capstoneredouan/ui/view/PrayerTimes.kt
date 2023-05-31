@@ -98,8 +98,6 @@ fun PrayerTimes(navController: NavHostController, viewModel: PrayerTimesViewMode
             Text(text = "Refresh")
         }
 
-        //TODO: Add a button to go to the map
-
         // Display prayer times from the ViewModel
         Column(
             modifier = Modifier
