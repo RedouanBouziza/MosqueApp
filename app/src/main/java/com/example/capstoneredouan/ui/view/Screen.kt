@@ -1,4 +1,4 @@
-package com.example.capstoneredouan.ui.view.route
+package com.example.capstoneredouan.ui.view
 
 sealed class Screen(
     val route: String

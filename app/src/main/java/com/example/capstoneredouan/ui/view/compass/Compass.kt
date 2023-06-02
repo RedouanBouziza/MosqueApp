@@ -1,4 +1,4 @@
-package com.example.capstoneredouan.ui.view
+package com.example.capstoneredouan.ui.view.compass
 
 import androidx.compose.runtime.Composable
 
