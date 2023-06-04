@@ -1,12 +1,11 @@
 buildscript {
-    ext {
-        compose_ui_version = '1.2.0'
-    }
     repositories {
-        google()  // Google's Maven repository
-        mavenCentral()  // Maven Central repository
+        google()
+        mavenCentral()
     }
     dependencies {
+        classpath "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1"
+        classpath 'com.google.dagger:hilt-android-gradle-plugin:2.45'
         classpath 'com.google.gms:google-services:4.3.15'
     }
 }
@@ -15,7 +14,7 @@ buildscript {
 plugins {
     id 'com.android.application' version '7.4.2' apply false
     id 'com.android.library' version '7.4.2' apply false
-    id 'org.jetbrains.kotlin.android' version '1.7.0' apply false
+    id 'org.jetbrains.kotlin.android' version '1.7.20' apply false
 
     // Apply the Google Services plugin (if it's not already)
     id 'com.google.gms.google-services' version '4.3.10' apply false

@@ -6,7 +6,10 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="mosque_green">#047806</color>
-    <color name="mosque_green_background">#98B899</color>
+    <color name="mosque_green_light">#0D9810</color>
+    <color name="mosque_green_background">#B5DDB6</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_gray">#B2DDDDDD</color>
+    <color name="gray">#504D4D</color>
 </resources>
