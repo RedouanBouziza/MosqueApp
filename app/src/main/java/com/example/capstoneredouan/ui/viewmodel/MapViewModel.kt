@@ -10,6 +10,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.capstoneredouan.data.model.MapState
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.ktx.model.polygonOptions
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -18,7 +21,7 @@ class MapViewModel @Inject constructor(): ViewModel() {
 
     val state: MutableState<MapState> = mutableStateOf(
         MapState(
-            lastKnownLocation = null,
+            lastKnownLocation = null
         )
     )
 

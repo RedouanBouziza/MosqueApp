@@ -1,11 +1,38 @@
 <resources>
-    <string name="app_name">Capstone Redouan</string>
+    <string name="app_name">Mosque App</string>
 
     <string name="prayer_times">Prayer Times</string>
+    <string name="map">Map</string>
+    <string name="compass">Compass</string>
+    <string name="login">Login</string>
+    <string name="log_out">Logout</string>
+
     <string name="fajr">Fajr: %s</string>
     <string name="dhuhr">Dhuhr: %s</string>
     <string name="asr">Asr: %s</string>
     <string name="maghrib">Maghrib: %s</string>
     <string name="isha">Isha: %s</string>
+
+    <string name="city">City</string>
+    <string name="country">Country</string>
+
+    <string name="sign_in">Sign In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="empty_email">Empty email</string>
+    <string name="empty_password">Empty password</string>
+    <string name="empty_email_and_password">Empty email and password</string>
+    <string name="no_account">Don\'t have an account? </string>
+    <string name="registration">Registration\n</string>
+    <string name="firstName">Firstname\n</string>
+    <string name="lastName">Lastname\n</string>
+    <string name="verify_password">Verify password\n</string>
+    <string name="empty_firstname">Empty first name</string>
+    <string name="empty_lastname">Empty lastname\n</string>
+    <string name="password_mismatch">Password mismatch\n</string>
+    <string name="successful_registration">Successful</string>
+    <string name="already_have_account">Already have account\n</string>
+    <string name="register">Register\n</string>
 
 </resources>
