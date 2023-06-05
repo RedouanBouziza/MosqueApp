@@ -19,8 +19,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.capstoneredouan.R
@@ -48,6 +50,8 @@ private fun RegistrationFields(navController: NavHostController, viewModel: Logi
     var blankPassword by remember { mutableStateOf(false) }
     var blankVerifyPassword by remember { mutableStateOf(false) }
 
+    var passwordVisible by remember { mutableStateOf(false) }
+    var verifyPasswordVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -167,17 +171,28 @@ private fun RegistrationFields(navController: NavHostController, viewModel: Logi
                         blankPassword = it.isBlank()
                     },
                     placeholder = { Text(text = stringResource(id = R.string.password)) },
-                    visualTransformation = PasswordVisualTransformation(),
+                    visualTransformation = if (passwordVisible) VisualTransformation.None
+                    else PasswordVisualTransformation(),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         backgroundColor = colorResource(id = R.color.light_gray),
-                        focusedBorderColor = if (blankPassword) Color.Red
-                        else Color.Transparent,
-                        unfocusedBorderColor = if (blankPassword) Color.Red
-                        else Color.Transparent,
-                        placeholderColor = if (blankPassword) Color.Red
-                        else MaterialTheme.colors.onSurface,
+                        focusedBorderColor = if (blankPassword) Color.Red else Color.Transparent,
+                        unfocusedBorderColor = if (blankPassword) Color.Red else Color.Transparent,
+                        placeholderColor = if (blankPassword) Color.Red else MaterialTheme.colors.onSurface,
                         cursorColor = if (blankPassword) Color.Red else Color.Black,
-                    )
+                    ),
+                    trailingIcon = {
+                        ClickableText(
+                            modifier = Modifier.padding(end = 10.dp),
+                            text = AnnotatedString(
+                                text = if (passwordVisible) "Hide" else "Show",
+                                spanStyle = SpanStyle(
+                                    color = if (blankPassword) Color.Red else MaterialTheme.colors.primary,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            ),
+                            onClick = { passwordVisible = !passwordVisible }
+                        )
+                    }
                 )
 
                 Spacer(modifier = Modifier.height(10.dp))
@@ -192,17 +207,28 @@ private fun RegistrationFields(navController: NavHostController, viewModel: Logi
                         blankVerifyPassword = it.isBlank()
                     },
                     placeholder = { Text(text = stringResource(id = R.string.verify_password)) },
-                    visualTransformation = PasswordVisualTransformation(),
+                    visualTransformation = if (verifyPasswordVisible) VisualTransformation.None
+                    else PasswordVisualTransformation(),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         backgroundColor = colorResource(id = R.color.light_gray),
-                        focusedBorderColor = if (blankVerifyPassword) Color.Red
-                        else Color.Transparent,
-                        unfocusedBorderColor = if (blankVerifyPassword) Color.Red
-                        else Color.Transparent,
-                        placeholderColor = if (blankVerifyPassword) Color.Red
-                        else MaterialTheme.colors.onSurface,
+                        focusedBorderColor = if (blankVerifyPassword) Color.Red else Color.Transparent,
+                        unfocusedBorderColor = if (blankVerifyPassword) Color.Red else Color.Transparent,
+                        placeholderColor = if (blankVerifyPassword) Color.Red else MaterialTheme.colors.onSurface,
                         cursorColor = if (blankVerifyPassword) Color.Red else Color.Black,
-                    )
+                    ),
+                    trailingIcon = {
+                        ClickableText(
+                            modifier = Modifier.padding(end = 10.dp),
+                            text = AnnotatedString(
+                                text = if (verifyPasswordVisible) "Hide" else "Show",
+                                spanStyle = SpanStyle(
+                                    color = if (blankVerifyPassword) Color.Red else MaterialTheme.colors.primary,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            ),
+                            onClick = { verifyPasswordVisible = !verifyPasswordVisible }
+                        )
+                    }
                 )
 
                 Button(

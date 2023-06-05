@@ -20,8 +20,10 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.capstoneredouan.R
@@ -58,6 +60,8 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
     var password by remember { mutableStateOf("") }
     var blankEmail by remember { mutableStateOf(false) }
     var blankPassword by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) }
+
     val context = LocalContext.current
     val resources = context.resources
 
@@ -142,17 +146,29 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
                         blankPassword = it.isBlank()
                     },
                     placeholder = { Text(text = stringResource(id = R.string.password)) },
-                    visualTransformation = PasswordVisualTransformation(),
+                    visualTransformation = if (passwordVisible) VisualTransformation.None
+                    else PasswordVisualTransformation(),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         backgroundColor = colorResource(id = R.color.light_gray),
-                        focusedBorderColor = if (blankPassword) Color.Red
-                        else Color.Transparent,
-                        unfocusedBorderColor = if (blankPassword) Color.Red
-                        else Color.Transparent,
-                        placeholderColor = if (blankPassword) Color.Red
-                        else MaterialTheme.colors.onSurface,
+                        focusedBorderColor = if (blankPassword) Color.Red else Color.Transparent,
+                        unfocusedBorderColor = if (blankPassword) Color.Red else Color.Transparent,
+                        placeholderColor = if (blankPassword) Color.Red else MaterialTheme.colors.onSurface,
                         cursorColor = if (blankPassword) Color.Red else Color.Black,
-                    )
+                    ),
+                    trailingIcon = {
+                        ClickableText(
+                            modifier = Modifier
+                                .padding(end = 10.dp),
+                            text = AnnotatedString(
+                                text = if (passwordVisible) "Hide" else "Show",
+                                spanStyle = SpanStyle(
+                                    color = if (blankPassword) Color.Red else MaterialTheme.colors.primary,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            ),
+                            onClick = { passwordVisible = !passwordVisible }
+                        )
+                    }
                 )
 
                 Button(
