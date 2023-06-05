@@ -15,10 +15,12 @@
 
     <string name="city">City</string>
     <string name="country">Country</string>
+    <string name="update">Update</string>
 
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
     <string name="go_back">Something went wrong go back to login screen</string>
+    <string name="sorry">Sorry, this feature is not yet implemented \n and will be added next update.</string>
 
     <string name="firstName">Firstname\n</string>
     <string name="lastName">Lastname\n</string>
