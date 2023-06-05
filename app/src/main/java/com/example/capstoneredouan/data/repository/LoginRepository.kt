@@ -38,7 +38,7 @@ class LoginRepository {
                         } else {
                             Toast.makeText(
                                 context,
-                                "Invalid login credentials. Please verify your email and password and try again.",
+                                "Invalid login credentials. Please try again",
                                 Toast.LENGTH_SHORT
                             ).show()
                             navController.navigate(Screen.Login.route)

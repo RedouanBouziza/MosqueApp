@@ -183,12 +183,6 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
                             email.isBlank() && password.isBlank() -> {
                                 blankEmail = true
                                 blankPassword = true
-                                Toast.makeText(
-                                    context,
-                                    resources.getString(R.string.empty_email_and_password),
-                                    Toast.LENGTH_SHORT
-                                )
-                                    .show()
                             }
 
                             email.isBlank() -> {

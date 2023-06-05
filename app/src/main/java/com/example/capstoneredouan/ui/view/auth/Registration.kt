@@ -78,7 +78,7 @@ private fun RegistrationFields(navController: NavHostController, viewModel: Logi
                 Text(
                     modifier = Modifier
                         .padding(top = 20.dp),
-                    text = stringResource(id = R.string.registration),
+                    text = stringResource(id = R.string.register),
                     style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold),
                     color = colorResource(id = R.color.black)
                 )
@@ -242,44 +242,34 @@ private fun RegistrationFields(navController: NavHostController, viewModel: Logi
                         if (firstName.isBlank() || lastName.isBlank() || email.isBlank() || password.isBlank() || verifyPassword.isBlank()) {
                             if (firstName.isBlank()) {
                                 blankFirstName = true
-                                Toast.makeText(
-                                    context,
-                                    R.string.empty_firstname,
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
                             if (lastName.isBlank()) {
                                 blankLastName = true
-                                Toast.makeText(
-                                    context,
-                                    R.string.empty_lastname,
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
                             if (email.isBlank()) {
                                 blankEmail = true
-                                Toast.makeText(
-                                    context,
-                                    R.string.empty_email,
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
                             if (password.isBlank()) {
                                 blankPassword = true
-                                Toast.makeText(
-                                    context,
-                                    R.string.empty_password,
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
                             if (verifyPassword.isBlank()) {
                                 blankVerifyPassword = true
-                                Toast.makeText(
-                                    context,
-                                    R.string.empty_password,
-                                    Toast.LENGTH_SHORT
-                                ).show()
                             }
+                        } else if (password.length < 6) {
+                            blankPassword = true
+                            blankVerifyPassword = true
+                            Toast.makeText(
+                                context,
+                                R.string.wrong_password,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else if (!email.contains("@")) {
+                            blankEmail = true
+                            Toast.makeText(
+                                context,
+                                R.string.invalid,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         } else if (password != verifyPassword) {
                             blankPassword = true
                             blankVerifyPassword = true

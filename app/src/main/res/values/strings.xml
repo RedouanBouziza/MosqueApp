@@ -19,6 +19,8 @@
 
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="register">Registration</string>
+
     <string name="go_back">Something went wrong go back to login screen</string>
     <string name="sorry">Sorry, this feature is not yet implemented \n and will be added next update.</string>
 
@@ -31,14 +33,16 @@
     <string name="no_account">Don\'t have an account? </string>
     <string name="already_have_account">Already have an account?</string>
 
-    <string name="empty_email">Empty email</string>
-    <string name="empty_password">Empty password</string>
-    <string name="empty_email_and_password">Empty email and password</string>
-    <string name="registration">Registration\n</string>
+    <string name="empty_email">Email empty</string>
+    <string name="empty_password">Password empty</string>
+    <string name="empty_verify_password">Verify Password empty</string>
+    <string name="empty_email_and_password">Fill in the fields!</string>
+
     <string name="empty_firstname">Empty first name</string>
     <string name="empty_lastname">Empty lastname\n</string>
-    <string name="password_mismatch">Password mismatch\n</string>
-    <string name="successful_registration">Successful</string>
-    <string name="register">Register\n</string>
+    <string name="password_mismatch">Password mismatch</string>
+
+    <string name="invalid">Invalid email format, It must contain @</string>
+    <string name="wrong_password">Password must be at least 6 characters long</string>
 
 </resources>
