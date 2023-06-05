@@ -165,7 +165,7 @@ fun BottomBar(navController: NavHostController) {
         Screen.CompassScreen,
     )
 
-    if (currentUser != null && currentRoute != Screen.Login.route) {
+    if (currentUser != null && currentRoute != Screen.Login.route && currentRoute != Screen.Registration.route) {
         BottomNavigation {
 
             items.forEach { screen ->

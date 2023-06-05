@@ -24,21 +24,24 @@ class LoginRepository {
         navController: NavHostController
     ) {
         try {
+            _loadingUser.value = Resource.Loading()
+
             withTimeout(5000) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
-                        _loadingUser.value = Resource.Loading()
                         if (task.isSuccessful) {
                             val user = FirebaseAuth.getInstance().currentUser
                             if (user != null) {
                                 navController.navigate(Screen.PrayerTimesScreen.route)
                             }
+                            _loadingUser.value = Resource.Success()
                         } else {
                             Toast.makeText(
                                 context,
                                 "Incorrect email or password! Please try again",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            navController.navigate(Screen.Login.route)
                         }
                     }
             }

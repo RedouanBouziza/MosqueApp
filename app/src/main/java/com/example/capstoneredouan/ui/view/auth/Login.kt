@@ -4,14 +4,12 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.ui.Alignment
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
@@ -27,6 +25,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.capstoneredouan.R
+import com.example.capstoneredouan.data.api.PrayerTimesApi.context
 import com.example.capstoneredouan.data.utils.Resource
 import com.example.capstoneredouan.ui.view.Screen
 import com.example.capstoneredouan.ui.viewmodel.LoginViewModel
@@ -36,19 +35,16 @@ fun Login(navController: NavHostController, viewModel: LoginViewModel) {
     val currentUserId by viewModel.currentUserId.observeAsState(initial = Resource.Empty())
 
     when (currentUserId) {
+
+        is Resource.Success -> {
+            navController.navigate(Screen.PrayerTimesScreen.route)
+        }
+
         is Resource.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.scale(2f)
-                )
-            }
+            LoginScreen(navController, viewModel)
         }
 
         else -> {
-            // Render the login screen
             LoginScreen(navController, viewModel)
         }
     }
@@ -76,10 +72,7 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
                 .fillMaxSize()
                 .padding(16.dp)
                 .clip(RoundedCornerShape(10.dp))
-                .background(colorResource(R.color.white))
-            //TODO: Remove this border later on when the design is done and the app is ready to be published
-//                .border(BorderStroke(2.dp, SolidColor(Color.Magenta)))
-            ,
+                .background(colorResource(R.color.white)),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -88,8 +81,6 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(360.dp)
-                    //TODO: Remove this border later on when the design is done and the app is ready to be published
-//                    .border(BorderStroke(2.dp, SolidColor(Color.Red)))
                     .padding(15.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -115,8 +106,6 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    //TODO: Remove this border later on when the design is done and the app is ready to be published
-//                    .border(BorderStroke(2.dp, SolidColor(Color.Green)))
                     .padding(15.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -145,7 +134,8 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
 
                 OutlinedTextField(
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .height(55.dp),
                     value = password,
                     onValueChange = {
                         password = it
@@ -170,7 +160,8 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
                         .align(Alignment.CenterHorizontally)
                         .padding(top = 30.dp)
                         .clip(RoundedCornerShape(10.dp))
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .height(55.dp),
                     onClick = {
                         when {
                             email.isBlank() && password.isBlank() -> {
@@ -222,8 +213,6 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        //TODO: Remove this border later on when the design is done and the app is ready to be published
-//                        .border(BorderStroke(2.dp, SolidColor(Color.Green)))
                         .padding(top = 15.dp),
                     horizontalArrangement = Arrangement.Center,
                 ) {
@@ -246,5 +235,61 @@ private fun LoginScreen(navController: NavHostController, viewModel: LoginViewMo
             }
         }
     }
+}
+
+@Composable
+fun LoadingScreen(navController: NavHostController) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorResource(R.color.mosque_green_background))
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .clip(RoundedCornerShape(10.dp))
+                .background(colorResource(R.color.white)),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.scale(2f)
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(15.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(
+                    modifier = Modifier
+                        .padding(top = 30.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .fillMaxWidth()
+                        .height(55.dp),
+                    onClick = {
+
+                        navController.navigate(Screen.Login.route)
+                    }
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.go_back),
+                        fontWeight = FontWeight.Bold,
+                    )
+                }
+            }
+        }
+    }
+
 }
 

@@ -18,21 +18,25 @@
 
     <string name="sign_in">Sign In</string>
     <string name="sign_up">Sign Up</string>
+    <string name="go_back">Something went wrong go back to login screen</string>
+
+    <string name="firstName">Firstname\n</string>
+    <string name="lastName">Lastname\n</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="verify_password">Verify Password\n</string>
+
+    <string name="no_account">Don\'t have an account? </string>
+    <string name="already_have_account">Already have an account?</string>
+
     <string name="empty_email">Empty email</string>
     <string name="empty_password">Empty password</string>
     <string name="empty_email_and_password">Empty email and password</string>
-    <string name="no_account">Don\'t have an account? </string>
     <string name="registration">Registration\n</string>
-    <string name="firstName">Firstname\n</string>
-    <string name="lastName">Lastname\n</string>
-    <string name="verify_password">Verify password\n</string>
     <string name="empty_firstname">Empty first name</string>
     <string name="empty_lastname">Empty lastname\n</string>
     <string name="password_mismatch">Password mismatch\n</string>
     <string name="successful_registration">Successful</string>
-    <string name="already_have_account">Already have account\n</string>
     <string name="register">Register\n</string>
 
 </resources>
