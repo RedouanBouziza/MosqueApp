@@ -9,27 +9,25 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.capstoneredouan.R
 import com.example.capstoneredouan.data.model.MapState
+import com.example.capstoneredouan.data.model.MarkerInfo
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.MarkerInfoWindow
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
-import com.google.maps.android.compose.rememberMarkerState
-import kotlinx.coroutines.launch
 
 @Composable
 fun Map(
@@ -45,9 +43,6 @@ fun Map(
     val uiSettings = remember {
         MapUiSettings(myLocationButtonEnabled = true)
     }
-    val properties by remember {
-        mutableStateOf(MapProperties(isMyLocationEnabled = true))
-    }
 
     Column(
         modifier = Modifier
@@ -61,18 +56,32 @@ fun Map(
                 .padding(16.dp)
                 .clip(RoundedCornerShape(10.dp))
             ,
-//            verticalArrangement = Arrangement.Center,
-//            horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            val mosques = listOf(
+                MarkerInfo("Mosque El Fath Amersfoort", LatLng(52.16549249236177, 5.401743050074181)),
+                MarkerInfo("Mosque Mevlana", LatLng(52.16269492247719, 5.391944781662562)),
+                MarkerInfo("Rahman Mosque Amersfoort", LatLng(52.1557615891582, 5.40925520035691)),
+                MarkerInfo("Mosque Tawhid Amersfoort", LatLng(52.13965277965032, 5.381358244609819)),
+
+                MarkerInfo("Mosque Al-Kabir", LatLng(52.35576081528535, 4.908481468264659)),
+                MarkerInfo("Mosque Badr", LatLng(52.38716911949453, 4.846218491644835)),
+                MarkerInfo("Mosque El Mouhssininne", LatLng(52.38517560542569, 4.913176709124514)),
+                MarkerInfo("The Blue Mosque", LatLng(52.350758850912186, 4.8334316215487725)),
+            )
+
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
                 properties = mapProperties,
                 uiSettings = uiSettings,
                 cameraPositionState = cameraPositionState
             ) {
-                val context = LocalContext.current
-                val scope = rememberCoroutineScope()
-
+                mosques.forEach { markerInfo ->
+                    Marker(
+                        state = MarkerState(position = markerInfo.latLng),
+                        title = markerInfo.title,
+                        snippet = markerInfo.latLng.toString()
+                    )
+                }
             }
         }
     }
