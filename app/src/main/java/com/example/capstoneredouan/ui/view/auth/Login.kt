@@ -34,21 +34,6 @@ import com.example.capstoneredouan.ui.viewmodel.LoginViewModel
 @Composable
 fun Login(navController: NavHostController, viewModel: LoginViewModel) {
     val currentUserId by viewModel.currentUserId.observeAsState(initial = Resource.Empty())
-//    val loginStatus by viewModel.loginStatus.observeAsState()
-//
-//    when (loginStatus) {
-//        is Resource.Error -> {
-//            val errorMessage = (loginStatus as Resource.Error<Boolean>).message
-//            Toast.makeText(LocalContext.current, errorMessage, Toast.LENGTH_SHORT).show()
-//        }
-//
-//        is Resource.Success -> {
-//            // Login successful, navigate to the next screen
-//            navController.navigate(Screen.PrayerTimesScreen.route)
-//        }
-//
-//        else -> {LoginScreen(navController, viewModel)}
-//    }
 
     when (currentUserId) {
         is Resource.Loading -> {
