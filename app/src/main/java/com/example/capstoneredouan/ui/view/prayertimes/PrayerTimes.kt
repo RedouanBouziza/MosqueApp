@@ -45,7 +45,6 @@ fun PrayerTimes(
 ) {
     var city by remember { mutableStateOf("Amsterdam") }
     var country by remember { mutableStateOf("Netherlands") }
-    val image: Painter = painterResource(id = R.drawable.img)
 
     viewModel.fetchDaytime(context, city, country)
     viewModel.fetchPrayerTimes(context, city, country)

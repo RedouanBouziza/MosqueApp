@@ -9,7 +9,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -25,7 +27,11 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Outline
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -103,9 +109,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-//TODO: make login work
-
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun NavHostScreen(
@@ -167,7 +170,16 @@ fun BottomBar(navController: NavHostController) {
     )
 
     if (currentUser != null && currentRoute != Screen.Login.route && currentRoute != Screen.Registration.route) {
-        BottomNavigation {
+        BottomNavigation(
+            modifier = Modifier
+                .graphicsLayer {
+                    shape = RoundedCornerShape(
+                        topStart = 16.dp,
+                        topEnd = 16.dp
+                    )
+                    clip = true
+                }
+        ) {
 
             items.forEach { screen ->
                 val isSelected = screen.route == currentRoute
@@ -199,6 +211,15 @@ fun TopBar(navController: NavHostController, loginViewModel: LoginViewModel) {
     val currentRoute = currentRoute(navController)
 
     TopAppBar(
+        modifier = Modifier
+            .background(color = colorResource(R.color.mosque_green_background))
+            .graphicsLayer {
+                shape = RoundedCornerShape(
+                    bottomStart = 16.dp,
+                    bottomEnd = 16.dp
+                )
+                clip = true
+            },
         title = {
             Text(text = "Mosque App")
         },
